@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.dao.IAddressDao" >
+
+    <resultMap id="addressResultMap" type="address">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="phone" column="phone"/>
+        <result property="address" column="address"/>
+        <result property="isDefault" column="is_default"/>
+        <result property="uid" column="uid"/>
+    </resultMap>
+    
+    <select id="getAddressListByUid" resultMap="addressResultMap">
+        select * from t_address a where a.uid = #{uid}
+    </select>
+
+    <!--
+        statement
+            -Prepare 预处理
+            Calll  调用过程
+    -->
+    <insert id="addAddress" statementType="CALLABLE">
+        { call add_address_pro(#{uid},#{username},#{phone},#{address},#{isDefault}) }
+    </insert>
+
+</mapper>

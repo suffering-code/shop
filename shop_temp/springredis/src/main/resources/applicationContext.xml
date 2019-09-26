@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="JedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxIdle" value="10"/>
+        <property name="minIdle" value="5"/>
+    </bean>
+
+    <bean id="JedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="hostName" value="192.168.91.111"/>
+        <property name="password" value="root"/>
+        <property name="poolConfig" ref="JedisPoolConfig"/>
+        <property name="port" value="6379"/>
+    </bean>
+
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="JedisConnectionFactory"/>
+
+        <!-- 设置key/value序列化方式为字符串,如果某个情况需要储存对象直接通过setValueSerializer进行覆盖-->
+        <property name="keySerializer" ref="stringRedisSerializer"/>
+<!--        <property name="valueSerializer" ref="stringRedisSerializer"/>-->
+        <property name="valueSerializer" ref="JdkSerializationRedisSerializer"/>
+    </bean>
+
+
+
+    <bean id="stringRedisSerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer"></bean>
+
+    <bean id="JdkSerializationRedisSerializer" class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"></bean>
+
+</beans>

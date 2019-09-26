@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <base th:href="${#request.getContextPath()+'/'}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form action="updateUser" method="post">
+    id:<input type="text"  name="id" th:value="${user.id}"><br>
+    username:<input type="text" name="username" th:value="${user.username}"><br>
+    password:<input type="text" name="password" th:value="${user.password}"><br>
+    <input type="submit" value="修改">
+</form>
+</body>
+</html>
